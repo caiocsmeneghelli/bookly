@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookly.Core", "Bookly.Core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookly.Infrastructure", "Bookly.Infrastructure\Bookly.Infrastructure.csproj", "{976737F5-368C-47A1-AF7C-E5A2C2FF3BBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookly.API", "Bookly.API\Bookly.API.csproj", "{DE8B23D4-09AC-4715-9032-59B4388758B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,5 +30,9 @@ Global
 		{976737F5-368C-47A1-AF7C-E5A2C2FF3BBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{976737F5-368C-47A1-AF7C-E5A2C2FF3BBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{976737F5-368C-47A1-AF7C-E5A2C2FF3BBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE8B23D4-09AC-4715-9032-59B4388758B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE8B23D4-09AC-4715-9032-59B4388758B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE8B23D4-09AC-4715-9032-59B4388758B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE8B23D4-09AC-4715-9032-59B4388758B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
