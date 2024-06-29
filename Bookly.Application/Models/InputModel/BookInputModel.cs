@@ -1,4 +1,4 @@
-namespace Bookly.API.Model.InputModels{
+namespace Bookly.Application.Model.InputModels{
     public class BookInputModel{
         public string Author { get; set; }
         public string ISBN { get; set; }
