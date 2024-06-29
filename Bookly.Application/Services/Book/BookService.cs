@@ -1,27 +1,48 @@
 using Bookly.Application.Model.InputModels;
 using Bookly.Application.Model.ViewModels;
+using Bookly.Core.Entities;
+using Bookly.Core.Repositories;
 
 namespace Bookly.Application.Service{
     public class BookService : IBookService
     {
-        public Task AddBookAsync(BookInputModel inputModel)
+        private readonly IBookRepository _bookRepository;
+
+        public BookService(IBookRepository bookRepository)
         {
-            throw new NotImplementedException();
+            _bookRepository = bookRepository;
         }
 
-        public Task<List<BookViewModel>> GetBooksAsync(string param)
+        public async Task AddBookAsync(BookInputModel inputModel)
         {
-            throw new NotImplementedException();
+            // To-Do: Criar validações
+            Book book = new Book(inputModel.Author, inputModel.ISBN,
+                inputModel.PublishYear, inputModel.Title);
+            await _bookRepository.CreateAsync(book);
         }
 
-        public Task<BookViewModel> GetBookyIdAsync(int id)
+        public async Task<List<BookViewModel>> GetBooksAsync(string param)
         {
-            throw new NotImplementedException();
+            var books = await _bookRepository.GetAllAsync(param);
+            return books.Select(reg => new BookViewModel(reg)).ToList(); 
         }
 
-        public Task RemoveBookAsync(int idBook)
+        public async Task<BookViewModel> GetBookyIdAsync(int id)
         {
-            throw new NotImplementedException();
+            Book? book = await _bookRepository.FindByIdAsync(id);
+            if(book == null)
+                throw new Exception("Livro não encontrado.");
+            
+            return new BookViewModel(book);
+        }
+
+        public async Task RemoveBookAsync(int idBook)
+        {
+            Book? book = await _bookRepository.FindByIdAsync(idBook);
+            if(book == null)
+                throw new Exception("Livro não encontrado.");
+            
+            await _bookRepository.RemoveAsync(idBook);
         }
     }
 }
