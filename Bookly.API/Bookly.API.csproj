@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bookly.Core\Bookly.Core.csproj" />
-    <ProjectReference Include="..\Bookly.Infrastructure\Bookly.Infrastructure.csproj" />
+    <ProjectReference Include="..\Bookly.Application\Bookly.Application.csproj" />
   </ItemGroup>
 
 </Project>

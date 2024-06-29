@@ -13,12 +13,13 @@ namespace Bookly.Application.Service{
             _bookRepository = bookRepository;
         }
 
-        public async Task AddBookAsync(BookInputModel inputModel)
+        public async Task<int> AddBookAsync(BookInputModel inputModel)
         {
             // To-Do: Criar validações
             Book book = new Book(inputModel.Author, inputModel.ISBN,
                 inputModel.PublishYear, inputModel.Title);
             await _bookRepository.CreateAsync(book);
+            return book.Id;
         }
 
         public async Task<List<BookViewModel>> GetBooksAsync(string param)

@@ -1,7 +1,5 @@
-using Bookly.API.Model.InputModels;
-using Bookly.API.Models.ViewModels;
-using Bookly.Core.Entities;
-using Bookly.Core.Repositories;
+using Bookly.Application.Model.InputModels;
+using Bookly.Application.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bookly.API.Controllers
@@ -9,19 +7,16 @@ namespace Bookly.API.Controllers
     [Route("api/book")]
     public class BookController : ControllerBase
     {
-        private readonly IBookRepository _bookRepository;
-        public BookController(IBookRepository bookRepository)
+        private readonly IBookService _bookService;
+
+        public BookController(IBookService bookService)
         {
-            _bookRepository = bookRepository;
+            _bookService = bookService;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBook(int id){
-            var book = await _bookRepository.FindByIdAsync(id);
-            if(book is null){
-                return BadRequest("Book not found.");
-            }
-            BookViewModel vwModel = new BookViewModel(book);
+            var vwModel = await _bookService.GetBookyIdAsync(id);
             return Ok(vwModel);
         }
 
@@ -29,11 +24,10 @@ namespace Bookly.API.Controllers
         [HttpPost("")]
         public async Task<IActionResult> Post(BookInputModel inputModel)
         {
-            // Adicionar Validacao
-            Book book = new Book(inputModel.Author, inputModel.ISBN, inputModel.PublishYear);
-            await _bookRepository.CreateAsync(book);
+            int bookId = await _bookService.AddBookAsync(inputModel);
+            if(bookId == 0) { return BadRequest("Falha ao adicionar livro."); }
 
-            return CreatedAtAction(nameof(GetBook), new {id = book.Id}, inputModel);
+            return CreatedAtAction(nameof(GetBook), new {id = bookId}, inputModel);
         }
     }
 }
