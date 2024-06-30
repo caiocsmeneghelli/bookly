@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bookly.API.Controllers
 {
     [Route("api/book")]
+    [ApiController]
     public class BookController : ControllerBase
     {
         private readonly IBookService _bookService;
