@@ -1,7 +1,12 @@
+using Bookly.Application.Model.InputModels;
+using Bookly.Application.Model.ViewModels;
+using Bookly.Application.Services;
+using Microsoft.AspNetCore.Mvc;
+
 namespace Bookly.API.Controllers
 {
     [ApiController]
-    [RoutePrefix("api/[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;
@@ -16,7 +21,7 @@ namespace Bookly.API.Controllers
         {
             try
             {
-                UserViewModel vwModel = _userService.GetUserAsync(idUser);
+                UserViewModel vwModel = await _userService.GetUserAsync(idUser);
                 return Ok(vwModel);
             }
             catch (Exception ex)
