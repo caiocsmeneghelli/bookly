@@ -1,4 +1,5 @@
 using Bookly.Application.Model.InputModels;
+using Bookly.Application.Model.ViewModels;
 using Bookly.Application.Service;
 using Bookly.Core.Entities;
 using Bookly.Core.Repositories;
@@ -20,6 +21,16 @@ namespace Bookly.Application.Services
             User user = new User(inputModel.Name, inputModel.Email);
             await _userRepository.CreateAsync(user);
             return user.Id;
+        }
+
+        public async Task<UserViewModel> GetUserAsync(int idUser)
+        {
+            User? user = await _userRepository.FindByIdAsync(idUser);
+            if(user == null){
+                throw new Exception("Usuário não encontrado.");
+            }
+
+            return new UserViewModel(user.Name, user.Email);
         }
     }
 }

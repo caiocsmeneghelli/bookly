@@ -11,12 +11,25 @@ namespace Bookly.API.Controllers
             _userService = userService;
         }
 
-        // Fix: criar busca por id.
+        [HttpGet("{idUser}")]
+        public async Task<IActionResult> Get(int idUser)
+        {
+            try
+            {
+                UserViewModel vwModel = _userService.GetUserAsync(idUser);
+                return Ok(vwModel);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPost("")]
         public async Task<IActionResult> Post(UserInputModel inputModel)
         {
             int idUser = await _userService.CreateUserAsync(inputModel);
-            return Ok(idUser);
+            
+            return CreatedAtAction(nameof(Get), idUser, inputModel);
         }
     }
 }
