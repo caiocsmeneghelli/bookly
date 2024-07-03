@@ -3,7 +3,7 @@ using Bookly.Application.Model.ViewModels;
 using Bookly.Core.Entities;
 using Bookly.Core.Repositories;
 
-namespace Bookly.Application.Service{
+namespace Bookly.Application.Services{
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;

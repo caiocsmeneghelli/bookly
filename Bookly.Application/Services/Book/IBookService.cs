@@ -1,7 +1,7 @@
 using Bookly.Application.Model.InputModels;
 using Bookly.Application.Model.ViewModels;
 
-namespace Bookly.Application.Service
+namespace Bookly.Application.Services
 {
     public interface IBookService
     {
