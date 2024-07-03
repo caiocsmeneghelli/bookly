@@ -6,11 +6,11 @@ namespace Bookly.API.Controllers
 {
     [Route("api/book")]
     [ApiController]
-    public class BooksController : ControllerBase
+    public class BookController : ControllerBase
     {
         private readonly IBookService _bookService;
 
-        public BooksController(IBookService bookService)
+        public BookController(IBookService bookService)
         {
             _bookService = bookService;
         }
