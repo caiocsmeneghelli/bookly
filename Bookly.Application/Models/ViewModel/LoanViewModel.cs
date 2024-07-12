@@ -20,7 +20,7 @@ namespace Bookly.Application.Model
 
         public void CountDelayedDays(){
             if(ReturnDate < DateTime.Now){
-                DelayedDays = ( DateTime.Now - ReturnDate).Days;
+                DelayedDays = (DateTime.Now - ReturnDate).Days;
             }
         }
     }

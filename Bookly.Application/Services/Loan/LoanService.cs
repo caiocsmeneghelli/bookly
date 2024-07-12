@@ -33,7 +33,14 @@ namespace Bookly.Application.Services
 
         public async Task<LoanViewModel?> ReturnLoan(int idLoan)
         {
-            Loan loan = await _loanRepository.GetLoanAsync(idLoan);
+            Loan? loan = await _loanRepository.GetLoanAsync(idLoan);
+            if(loan is null){
+                return null;            
+            }
+
+            loan.ReturnDate();
+
+            return new LoanViewModel(loan);
         }
     }
 }

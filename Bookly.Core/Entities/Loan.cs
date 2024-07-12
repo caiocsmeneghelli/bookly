@@ -18,5 +18,10 @@ namespace Bookly.Core.Entities{
         public int UserId { get; private set; }
         public DateTime LoanDate { get; private set; }
         public DateTime DueDate { get; private set; }
+        public DateTime? ReturnDate { get; private set; }
+
+        public void ReturnLoan(){
+            ReturnDate = DateTime.Now;
+        }
     }
 }
