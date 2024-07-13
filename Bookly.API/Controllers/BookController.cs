@@ -18,6 +18,7 @@ namespace Bookly.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetBooks(string param)
         {
+            // todo: Criar se ativos ou nao
             var books = await _bookService.GetBooksAsync(param);
             return Ok(books);
         }

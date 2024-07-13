@@ -7,7 +7,7 @@ namespace Bookly.Infrastructure.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {
-    private readonly DataContext _context;
+        private readonly DataContext _context;
 
         public UserRepository(DataContext context)
         {

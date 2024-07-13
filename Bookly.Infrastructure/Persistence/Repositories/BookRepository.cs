@@ -45,5 +45,10 @@ namespace Bookly.Infrastructure.Persistence.Repositories {
                 await _dataContext.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateAsync(Book book)
+        {
+            await _dataContext.SaveChangesAsync();
+        }
     }
 }
