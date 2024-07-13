@@ -6,5 +6,6 @@ namespace Bookly.Core.Repositories{
         Task<Book?> FindByIdAsync(int id);
         Task CreateAsync(Book book);
         Task RemoveAsync(int id);
+        Task UpdateAsync(Book book);
     }
 }

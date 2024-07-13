@@ -8,16 +8,32 @@ namespace Bookly.Application.Services
     public class LoanService : ILoanService
     {
         private readonly ILoanRepository _loanRepository;
+        private readonly IBookRepository _bookRepository;
+        private readonly IUserRepository _userRepository;
 
-        public LoanService(ILoanRepository loanRepository)
+        public LoanService(ILoanRepository loanRepository, IBookRepository bookRepository, IUserRepository userRepository = null)
         {
             _loanRepository = loanRepository;
+            _bookRepository = bookRepository;
+            _userRepository = userRepository;
         }
 
-        public Task<int> CreateAsync(LoanInputModel inputModel)
+        public async Task<int> CreateAsync(LoanInputModel inputModel)
         {
+            User? user = await _userRepository.FindByIdAsync(inputModel.IdUser);
+            Book? book = await _bookRepository.FindByIdAsync(inputModel.IdBook);
 
-            throw new NotImplementedException();
+            if(user is null){
+                throw new Exception("Usuário não encontrado.");
+            }
+
+            if(book is null){
+                throw new Exception("Livro não encontrado.");
+            }
+
+            Loan loan = new Loan(book, book.Id, user, user.Id, inputModel.DueDate);
+            int idLoan = await _loanRepository.CreateAsync(loan);
+            return idLoan;
         }
 
         public async Task<LoanViewModel?> GetByIdAsync(int idLoan)
@@ -39,6 +55,10 @@ namespace Bookly.Application.Services
             }
 
             loan.ReturnLoan();
+            loan.Book.ReturnLoan();
+
+            await _bookRepository.UpdateAsync(loan.Book);
+            await _loanRepository.UpdateAsync(loan);
 
             return new LoanViewModel(loan.Book.Title, loan.User.Name, 
                 loan.LoanDate, loan.DueDate, loan.ReturnDate);
