@@ -7,7 +7,7 @@ namespace Bookly.Application.Services
     {
         Task<int> AddBookAsync(BookInputModel inputModel);
         Task RemoveBookAsync(int idBook);
-        Task<BookViewModel> GetBookyIdAsync(int id);
+        Task<BookViewModel?> GetBookyIdAsync(int id);
         Task<List<BookViewModel>> GetBooksAsync(string? param = null);
     }
 }

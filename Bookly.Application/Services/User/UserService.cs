@@ -22,11 +22,11 @@ namespace Bookly.Application.Services
             return user.Id;
         }
 
-        public async Task<UserViewModel> GetUserAsync(int idUser)
+        public async Task<UserViewModel?> GetUserAsync(int idUser)
         {
             User? user = await _userRepository.FindByIdAsync(idUser);
             if(user == null){
-                throw new Exception("Usuário não encontrado.");
+                return null;
             }
 
             return new UserViewModel(user.Name, user.Email);

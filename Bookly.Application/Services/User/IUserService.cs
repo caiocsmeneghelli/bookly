@@ -7,6 +7,6 @@ namespace Bookly.Application.Services
     public interface IUserService
     {
         Task<int> CreateUserAsync(UserInputModel inputModel);
-        Task<UserViewModel> GetUserAsync(int idUser);
+        Task<UserViewModel?> GetUserAsync(int idUser);
     }
 }

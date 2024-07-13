@@ -28,11 +28,11 @@ namespace Bookly.Application.Services{
             return books.Select(reg => new BookViewModel(reg)).ToList(); 
         }
 
-        public async Task<BookViewModel> GetBookyIdAsync(int id)
+        public async Task<BookViewModel?> GetBookyIdAsync(int id)
         {
             Book? book = await _bookRepository.FindByIdAsync(id);
-            if(book == null)
-                throw new Exception("Livro não encontrado.");
+            if (book == null)
+                return null;
             
             return new BookViewModel(book);
         }

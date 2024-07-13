@@ -14,11 +14,12 @@ namespace Bookly.API.Controllers
         {
             _bookService = bookService;
         }
+        // todo: Criar buscar todos disponiveis
 
         [HttpGet]
         public async Task<IActionResult> GetBooks(string? param = null)
         {
-            // todo: Criar se ativos ou nao
+            // FIX: busca por parametro
             var books = await _bookService.GetBooksAsync(param);
             return Ok(books);
         }
@@ -27,6 +28,8 @@ namespace Bookly.API.Controllers
         public async Task<IActionResult> GetBook(int id)
         {
             var vwModel = await _bookService.GetBookyIdAsync(id);
+            if (vwModel is null)
+                return NotFound("Livro não encontrado.");
             return Ok(vwModel);
         }
 

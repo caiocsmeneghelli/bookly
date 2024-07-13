@@ -16,12 +16,12 @@ namespace Bookly.API.Controllers
             _userService = userService;
         }
 
-        [HttpGet("{idUser}")]
-        public async Task<IActionResult> Get(int idUser)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                UserViewModel vwModel = await _userService.GetUserAsync(idUser);
+                UserViewModel? vwModel = await _userService.GetUserAsync(id);
                 return Ok(vwModel);
             }
             catch (Exception ex)
@@ -33,8 +33,8 @@ namespace Bookly.API.Controllers
         public async Task<IActionResult> Post(UserInputModel inputModel)
         {
             int idUser = await _userService.CreateUserAsync(inputModel);
-            
-            return CreatedAtAction(nameof(Get), idUser, inputModel);
+
+            return CreatedAtAction(nameof(Get), new { id = idUser }, inputModel);
         }
     }
 }
