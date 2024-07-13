@@ -5,5 +5,6 @@ namespace Bookly.Core.Repositories{
         Task<Loan> GetLoanAsync(int id);
         Task<int> CreateAsync(Loan loan);
         Task UpdateAsync(Loan loan);
+        Task<List<Loan>> GetAllAsync(bool active);
     }
 }

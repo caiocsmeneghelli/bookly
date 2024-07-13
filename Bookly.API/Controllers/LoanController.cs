@@ -17,7 +17,7 @@ namespace Bookly.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var loan = await _loanService.GetByIdAsync(id);
+            var loan = await _loanService.GetById(id);
             if (loan != null)
             {
                 return Ok(loan);
@@ -28,14 +28,20 @@ namespace Bookly.API.Controllers
         [HttpGet("active")]
         public async Task<IActionResult> GetAllActive()
         {
-            // TODO
-            return Ok();
+            var list = await _loanService.GetAll(true);
+            return Ok(list);
+        }
+
+        [HttpGet("")]
+        public async Task<IActionResult> GetAll(){
+            var list = await _loanService.GetAll(false);
+            return Ok(list);
         }
 
         [HttpPost("")]
         public async Task<IActionResult> Post(LoanInputModel model)
         {
-            int idLoan = await _loanService.CreateAsync(model);
+            int idLoan = await _loanService.Create(model);
             if(idLoan == 0){
                 return BadRequest("Falha ao criar emprestimo.");
             }

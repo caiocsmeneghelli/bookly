@@ -18,7 +18,7 @@ namespace Bookly.Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<int> CreateAsync(LoanInputModel inputModel)
+        public async Task<int> Create(LoanInputModel inputModel)
         {
             User? user = await _userRepository.FindByIdAsync(inputModel.IdUser);
             Book? book = await _bookRepository.FindByIdAsync(inputModel.IdBook);
@@ -32,11 +32,14 @@ namespace Bookly.Application.Services
             }
 
             Loan loan = new Loan(book, book.Id, user, user.Id, inputModel.DueDate);
+            book.Loan();
+
+            await _bookRepository.UpdateAsync(book);
             int idLoan = await _loanRepository.CreateAsync(loan);
             return idLoan;
         }
 
-        public async Task<LoanViewModel?> GetByIdAsync(int idLoan)
+        public async Task<LoanViewModel?> GetById(int idLoan)
         {
             Loan loan = await _loanRepository.GetLoanAsync(idLoan);
             if(loan is null){
@@ -62,6 +65,12 @@ namespace Bookly.Application.Services
 
             return new LoanViewModel(loan.Book.Title, loan.User.Name, 
                 loan.LoanDate, loan.DueDate, loan.ReturnDate);
+        }
+
+        public async Task<List<LoanViewModel>> GetAll(bool active){
+            var list = await _loanRepository.GetAllAsync(active);
+            return list.Select(reg => new LoanViewModel(reg.Book.Title, reg.User.Name, 
+                reg.LoanDate, reg.DueDate, reg.ReturnDate)).ToList();
         }
     }
 }
