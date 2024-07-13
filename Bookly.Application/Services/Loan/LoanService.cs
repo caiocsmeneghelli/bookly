@@ -28,7 +28,7 @@ namespace Bookly.Application.Services
             }
 
             return new LoanViewModel(loan.Book.Title, loan.User.Name, 
-                loan.LoanDate, loan.DueDate);
+                loan.LoanDate, loan.DueDate, loan.ReturnDate);
         }
 
         public async Task<LoanViewModel?> ReturnLoan(int idLoan)
@@ -38,9 +38,10 @@ namespace Bookly.Application.Services
                 return null;            
             }
 
-            loan.ReturnDate();
+            loan.ReturnLoan();
 
-            return new LoanViewModel(loan);
+            return new LoanViewModel(loan.Book.Title, loan.User.Name, 
+                loan.LoanDate, loan.DueDate, loan.ReturnDate);
         }
     }
 }

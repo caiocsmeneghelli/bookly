@@ -18,8 +18,7 @@ namespace Bookly.Core.Entities
             Author = author;
             ISBN = iSBN;
             PublishYear = publishYear;
-            Quantity = quantity;
-            QuantityAvailable = Quantity;
+            Available = true;
         }
 
         public int Id { get; private set; }
@@ -27,20 +26,14 @@ namespace Bookly.Core.Entities
         public string Author { get; private set; }
         public string ISBN { get; private set; }
         public int PublishYear { get; private set; }
-
-        public int Quantity { get; private set; }
-        public int QuantityAvailable { get; private set; }
+        public bool Available { get; private set; }
 
         public void Loan(){
-            if(QuantityAvailable > 0){
-                QuantityAvailable--;
-            }
+            Available = false;
         }
 
         public void ReturnLoan(){
-            if(QuantityAvailable < Quantity){
-                QuantityAvailable++;
-            }
+            Available = true;
         }
     }
 }
