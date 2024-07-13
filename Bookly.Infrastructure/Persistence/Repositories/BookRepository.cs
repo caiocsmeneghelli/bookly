@@ -25,10 +25,10 @@ namespace Bookly.Infrastructure.Persistence.Repositories {
                 .SingleOrDefaultAsync(reg => reg.Id == id);
         }
 
-        public async Task<IEnumerable<Book>> GetAllAsync(string param)
+        public async Task<IEnumerable<Book>> GetAllAsync(string? param = null)
         {
             var books = _dataContext.Books.AsQueryable();
-            if(param != ""){
+            if(param != "" && param != null){
                 books = books.Where(reg => param.Contains(reg.Author) || 
                     param.Contains(reg.Title));
             }

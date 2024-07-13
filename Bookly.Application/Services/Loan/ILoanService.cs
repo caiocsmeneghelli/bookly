@@ -1,7 +1,7 @@
 using Bookly.Application.Model;
 using Bookly.Core.Entities;
 
-namespace Bookly.Application.Service
+namespace Bookly.Application.Services
 {
     public interface ILoanService {
         Task<int> Create(LoanInputModel inputModel);

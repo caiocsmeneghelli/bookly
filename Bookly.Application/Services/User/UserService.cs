@@ -1,6 +1,5 @@
 using Bookly.Application.Model.InputModels;
 using Bookly.Application.Model.ViewModels;
-using Bookly.Application.Service;
 using Bookly.Core.Entities;
 using Bookly.Core.Repositories;
 

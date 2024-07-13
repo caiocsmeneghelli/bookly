@@ -2,7 +2,7 @@ using Bookly.Application.Model.InputModels;
 using Bookly.Application.Model.ViewModels;
 using Bookly.Core.Entities;
 
-namespace Bookly.Application.Service
+namespace Bookly.Application.Services
 {
     public interface IUserService
     {

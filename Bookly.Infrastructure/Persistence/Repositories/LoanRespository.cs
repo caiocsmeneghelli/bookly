@@ -26,7 +26,7 @@ namespace Bookly.Infrastructure.Persistence.Repositories
         {
             var query = _context.Loans.AsQueryable();
             if(active){
-                query = query.Where(loan => loan.ReturnDate.HasValue);
+                query = query.Where(loan => loan.ReturnDate == null);
             }
 
             query = query.Include(reg => reg.User)
@@ -40,7 +40,7 @@ namespace Bookly.Infrastructure.Persistence.Repositories
             return await _context.Loans
                 .Include(reg => reg.Book)
                 .Include(reg => reg.User)
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync(reg => reg.Id == id);
         }
 
         public async Task UpdateAsync(Loan loan)

@@ -1,11 +1,11 @@
-namespace Bookly.Core.Entities{
-    public class Loan{
-        public Loan(Book book, int bookId, User user, int userId, 
+namespace Bookly.Core.Entities
+{
+    public class Loan
+    {
+        public Loan(int bookId, int userId,
         DateTime dueDate)
         {
-            Book = book;
             BookId = bookId;
-            User = user;
             UserId = userId;
             LoanDate = DateTime.Now;
             DueDate = dueDate;
@@ -20,7 +20,8 @@ namespace Bookly.Core.Entities{
         public DateTime DueDate { get; private set; }
         public DateTime? ReturnDate { get; private set; }
 
-        public void ReturnLoan(){
+        public void ReturnLoan()
+        {
             ReturnDate = DateTime.Now;
         }
     }

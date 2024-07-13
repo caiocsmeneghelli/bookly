@@ -1,5 +1,4 @@
 using Bookly.Application.Model;
-using Bookly.Application.Service;
 using Bookly.Core.Entities;
 using Bookly.Core.Repositories;
 
@@ -23,15 +22,17 @@ namespace Bookly.Application.Services
             User? user = await _userRepository.FindByIdAsync(inputModel.IdUser);
             Book? book = await _bookRepository.FindByIdAsync(inputModel.IdBook);
 
-            if(user is null){
+            if (user is null)
+            {
                 throw new Exception("Usuário não encontrado.");
             }
 
-            if(book is null){
+            if (book is null)
+            {
                 throw new Exception("Livro não encontrado.");
             }
 
-            Loan loan = new Loan(book, book.Id, user, user.Id, inputModel.DueDate);
+            Loan loan = new Loan(book.Id, user.Id, inputModel.DueDate);
             book.Loan();
 
             await _bookRepository.UpdateAsync(book);
@@ -41,20 +42,22 @@ namespace Bookly.Application.Services
 
         public async Task<LoanViewModel?> GetById(int idLoan)
         {
-            Loan loan = await _loanRepository.GetLoanAsync(idLoan);
-            if(loan is null){
+            Loan? loan = await _loanRepository.GetLoanAsync(idLoan);
+            if (loan is null)
+            {
                 return null;
             }
 
-            return new LoanViewModel(loan.Book.Title, loan.User.Name, 
+            return new LoanViewModel(loan.Book.Title, loan.User.Name,
                 loan.LoanDate, loan.DueDate, loan.ReturnDate);
         }
 
         public async Task<LoanViewModel?> ReturnLoan(int idLoan)
         {
             Loan? loan = await _loanRepository.GetLoanAsync(idLoan);
-            if(loan is null){
-                return null;            
+            if (loan is null)
+            {
+                return null;
             }
 
             loan.ReturnLoan();
@@ -63,13 +66,14 @@ namespace Bookly.Application.Services
             await _bookRepository.UpdateAsync(loan.Book);
             await _loanRepository.UpdateAsync(loan);
 
-            return new LoanViewModel(loan.Book.Title, loan.User.Name, 
+            return new LoanViewModel(loan.Book.Title, loan.User.Name,
                 loan.LoanDate, loan.DueDate, loan.ReturnDate);
         }
 
-        public async Task<List<LoanViewModel>> GetAll(bool active){
+        public async Task<List<LoanViewModel>> GetAll(bool active)
+        {
             var list = await _loanRepository.GetAllAsync(active);
-            return list.Select(reg => new LoanViewModel(reg.Book.Title, reg.User.Name, 
+            return list.Select(reg => new LoanViewModel(reg.Book.Title, reg.User.Name,
                 reg.LoanDate, reg.DueDate, reg.ReturnDate)).ToList();
         }
     }

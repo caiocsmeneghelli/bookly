@@ -22,7 +22,7 @@ namespace Bookly.Application.Services{
             return book.Id;
         }
 
-        public async Task<List<BookViewModel>> GetBooksAsync(string param)
+        public async Task<List<BookViewModel>> GetBooksAsync(string? param = null)
         {
             var books = await _bookRepository.GetAllAsync(param);
             return books.Select(reg => new BookViewModel(reg)).ToList(); 

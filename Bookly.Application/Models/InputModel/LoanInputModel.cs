@@ -8,8 +8,6 @@ namespace Bookly.Application.Model
             IdBook = idBook;
             DueDate = dueDate;
         }
-        public LoanInputModel()
-        { }
 
         public int IdUser { get; private set; }
         public int IdBook { get; private set; }
