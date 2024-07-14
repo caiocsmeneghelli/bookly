@@ -1,5 +1,6 @@
 using Bookly.Application.Model.InputModels;
 using Bookly.Application.Model.ViewModels;
+using Bookly.Application.Validation.Validator;
 using Bookly.Core.Entities;
 using Bookly.Core.Repositories;
 
@@ -15,7 +16,11 @@ namespace Bookly.Application.Services{
 
         public async Task<int> AddBookAsync(BookInputModel inputModel)
         {
-            // To-Do: Criar validações
+            var validator = new BookInputModelValidator(inputModel);
+            if(validator.IsValid() == false){
+                // throw Exception
+            }
+
             Book book = new Book(inputModel.Author, inputModel.ISBN,
                 inputModel.PublishYear, inputModel.Title);
             await _bookRepository.CreateAsync(book);
@@ -41,8 +46,10 @@ namespace Bookly.Application.Services{
         {
             Book? book = await _bookRepository.FindByIdAsync(idBook);
             if(book == null)
+            {
                 throw new Exception("Livro não encontrado.");
-            
+            }
+
             await _bookRepository.RemoveAsync(idBook);
         }
     }
