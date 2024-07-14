@@ -1,6 +1,7 @@
 using Bookly.Application.Model.InputModels;
 using Bookly.Application.Model.ViewModels;
-using Bookly.Application.Validation.Validator;
+using Bookly.Application.Validations.Exceptions;
+using Bookly.Application.Validations.Validators;
 using Bookly.Core.Entities;
 using Bookly.Core.Repositories;
 
@@ -18,7 +19,7 @@ namespace Bookly.Application.Services{
         {
             var validator = new BookInputModelValidator(inputModel);
             if(validator.IsValid() == false){
-                // throw Exception
+                throw new BookBadRequestException(validator.ReturnErrors());
             }
 
             Book book = new Book(inputModel.Author, inputModel.ISBN,
