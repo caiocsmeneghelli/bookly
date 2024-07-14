@@ -1,3 +1,4 @@
+using Bookly.API.Exceptions;
 using Bookly.Application.Services;
 using Bookly.Core.Repositories;
 using Bookly.Infrastructure.Persistence.Context;
@@ -36,5 +37,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseExceptionHandleMiddleware();
 
 app.Run();

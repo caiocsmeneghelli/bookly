@@ -5,7 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Validation\Exception\User\" />
+    <Folder Include="Validations\Exceptions\User\" />
   </ItemGroup>
 
   <PropertyGroup>
