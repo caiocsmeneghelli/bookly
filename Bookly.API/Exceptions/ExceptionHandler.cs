@@ -40,16 +40,14 @@ namespace Bookly.API.Exceptions
 
                 await httpContext.Response.WriteAsJsonAsync(problemDetails);
             }
-            else
-            {
+            else if(ex is NotFoundException nf){
                 httpContext.Response.StatusCode = 400;
 
                 var problemDetails = new ProblemDetails();
-                problemDetails.Title = "BadRequest";
+                problemDetails.Title = "NotFound";
                 problemDetails.Detail = ex.Message;
-                problemDetails.Status = StatusCodes.Status400BadRequest;
+                problemDetails.Status = StatusCodes.Status404NotFound;
                 problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6problemDetails..5.1";
-                problemDetails.Extensions.Add("data", ex.Data);
 
                 await httpContext.Response.WriteAsJsonAsync(problemDetails);
             }
