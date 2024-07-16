@@ -51,29 +51,6 @@ namespace Bookly.API.Exceptions
 
                 await httpContext.Response.WriteAsJsonAsync(problemDetails);
             }
-
-            //if (ex is InvalidOperationException)
-            //{
-            //    httpContext.Response.StatusCode = 400; //HTTP status code
-            //                                           //httpContext.Response.WriteAsync("Invalid operation");
-            //                                           //httpContext.Response.WriteAsync("Invalid operation");             
-            //    await httpContext.Response.WriteAsJsonAsync(new ResponseModelException
-            //    {
-            //        Message = "Invalid operation",
-            //        StatusCode = 400,
-            //        Success = false
-            //    });
-            //}
-            //else if (ex is ArgumentException)
-            //{
-            //    await httpContext.Response.WriteAsync("Invalid argument");
-            //}
-            //else
-            //{
-            //    await httpContext.Response.WriteAsync("Unknown error");
-            //}
-
-
         }
     }
 
