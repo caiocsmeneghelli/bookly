@@ -1,52 +1,56 @@
 ﻿using Bookly.Application.Model.InputModels;
+using FluentValidation;
 
 namespace Bookly.Application.Validations.Validators
 {
-    public class BookInputModelValidator
+    public class BookInputModelValidator : AbstractValidator<BookInputModel>
     {
-        private List<string> errors;
-        public BookInputModelValidator(BookInputModel inputModel)
+        public BookInputModelValidator()
         {
-            errors = new List<string>();
-            if (string.IsNullOrEmpty(inputModel.Title))
-            {
-                errors.Add("Titulo do livro não pode ser vazio.");
-            }
+            RuleFor(reg => reg)
+                .NotNull()
+                .WithMessage("Não é possível passar o objeto vazio.");
 
-            if (inputModel.Title.Length < 3)
-            {
-                errors.Add("Titulo do livro deve ter no minimo 3 caracteres.");
-            }
+            RuleFor(reg => reg.Title)
+                .NotEmpty()
+                .WithMessage("Titulo do livro não pode ser vazio.");
 
-            if (string.IsNullOrEmpty(inputModel.Author))
+            When(reg => reg.Title is not null, () =>
             {
-                errors.Add("Nome do autor do livro não pode ser vazio.");
-            }
+                RuleFor(reg => reg.Title)
+                                .MinimumLength(3)
+                                .WithMessage("Titulo do livro deve ter no minimo 3 caracteres.");
 
-            if (inputModel.Author.Length < 3)
-            {
-                errors.Add("Nome do autor do livro deve ter no minimo 3 caracteres.");
-            }
+            });
 
-            if (string.IsNullOrEmpty(inputModel.ISBN))
-            {
-                errors.Add("ISBN não pode ser vazio.");
-            }
+            RuleFor(reg => reg.Author)
+                .NotEmpty()
+                .WithMessage("O nome do Autor do livro não pode ser vazio.");
 
-            if (inputModel.PublishYear >= DateTime.Now || DateTime.MinValue.Equals(inputModel.PublishYear))
+            When(reg => reg.Author is not null, () =>
             {
-                errors.Add("Valor de data de publicação inválido.");
-            }
+                RuleFor(reg => reg.Author)
+                                .MinimumLength(3)
+                                .WithMessage("O nome do Autor do livro deve ter no minimo 3 caracteres.");
+
+            });
+
+            RuleFor(reg => reg.ISBN)
+                .NotEmpty()
+                .WithMessage("ISBN não pode ser vazio.");
+
+            RuleFor(reg => reg.PublishYear)
+                .NotNull()
+                .Must(ValidadePublishYear)
+                .WithMessage("Valor de data de publicação inválido.");
         }
 
-        public bool IsValid()
-        {
-            return !errors.Any();
-        }
-
-        public List<string> ReturnErrors()
-        {
-            return errors;
+        private bool ValidadePublishYear(DateTime? publishYear){
+            
+            if(publishYear.Value >= DateTime.Now || DateTime.MinValue.Equals(publishYear)){
+                return false;
+            }
+            return true;
         }
     }
 }

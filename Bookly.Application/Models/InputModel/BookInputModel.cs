@@ -7,6 +7,6 @@ namespace Bookly.Application.Model.InputModels
         public string? Author { get; set; }
         public string? Title { get; set; }
         public string? ISBN { get; set; }
-        public DateTime PublishYear { get; set; }
+        public DateTime? PublishYear { get; set; }
     }
 }

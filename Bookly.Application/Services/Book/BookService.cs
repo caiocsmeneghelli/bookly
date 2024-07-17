@@ -17,13 +17,14 @@ namespace Bookly.Application.Services{
 
         public async Task<int> AddBookAsync(BookInputModel inputModel)
         {
-            var validator = new BookInputModelValidator(inputModel);
-            if(validator.IsValid() == false){
-                throw new BookBadRequestException(validator.ReturnErrors());
+            var validator = new BookInputModelValidator();
+            var result = validator.Validate(inputModel);
+            if(result.IsValid == false){
+                throw new BookBadRequestException(result.Errors);
             }
 
             Book book = new Book(inputModel.Author, inputModel.ISBN,
-                inputModel.PublishYear, inputModel.Title);
+                inputModel.PublishYear.Value, inputModel.Title);
             await _bookRepository.CreateAsync(book);
             return book.Id;
         }
