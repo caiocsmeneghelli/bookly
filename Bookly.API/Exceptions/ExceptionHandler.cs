@@ -52,11 +52,11 @@ namespace Bookly.API.Exceptions
                 await httpContext.Response.WriteAsJsonAsync(problemDetails);
             }
             else{
-                httpContext.Response.StatusCode = 400;
+                httpContext.Response.StatusCode = 500;
                 var problemDetails = new ProblemDetails();
-                problemDetails.Title = "BadRequest";
+                problemDetails.Title = "InternalServerError";
                 problemDetails.Detail = ex.Message;
-                problemDetails.Status = StatusCodes.Status400BadRequest;
+                problemDetails.Status = StatusCodes.Status500InternalServerError;
                 problemDetails.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6problemDetails..5.1";
 
                 await httpContext.Response.WriteAsJsonAsync(problemDetails);

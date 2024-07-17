@@ -19,15 +19,8 @@ namespace Bookly.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            try
-            {
                 UserViewModel? vwModel = await _userService.GetUserAsync(id);
                 return Ok(vwModel);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
         [HttpPost("")]
         public async Task<IActionResult> Post(UserInputModel inputModel)
