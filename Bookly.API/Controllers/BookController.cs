@@ -29,7 +29,7 @@ namespace Bookly.API.Controllers
         {
             var vwModel = await _bookService.GetBookyIdAsync(id);
             if (vwModel is null)
-                return NotFound("Livro não encontrado.");
+                return NotFound("Livro nï¿½o encontrado.");
             return Ok(vwModel);
         }
 

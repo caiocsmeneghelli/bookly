@@ -1,4 +1,5 @@
-﻿using Bookly.Application.Model.InputModels;
+﻿using System.Security.Cryptography.X509Certificates;
+using Bookly.Application.Model.InputModels;
 using FluentValidation;
 
 namespace Bookly.Application.Validations.Validators
@@ -46,7 +47,7 @@ namespace Bookly.Application.Validations.Validators
         }
 
         private bool ValidadePublishYear(DateTime? publishYear){
-            
+            if(publishYear is null) return false;
             if(publishYear.Value >= DateTime.Now || DateTime.MinValue.Equals(publishYear)){
                 return false;
             }

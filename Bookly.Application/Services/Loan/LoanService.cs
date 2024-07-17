@@ -10,7 +10,7 @@ namespace Bookly.Application.Services
         private readonly IBookRepository _bookRepository;
         private readonly IUserRepository _userRepository;
 
-        public LoanService(ILoanRepository loanRepository, IBookRepository bookRepository, IUserRepository userRepository = null)
+        public LoanService(ILoanRepository loanRepository, IBookRepository bookRepository, IUserRepository userRepository)
         {
             _loanRepository = loanRepository;
             _bookRepository = bookRepository;
@@ -32,7 +32,7 @@ namespace Bookly.Application.Services
                 throw new Exception("Livro não encontrado.");
             }
 
-            Loan loan = new Loan(book.Id, user.Id, inputModel.DueDate);
+            Loan loan = new Loan(book.Id, user.Id, inputModel.DueDate.Value);
             book.Loan();
 
             await _bookRepository.UpdateAsync(book);
