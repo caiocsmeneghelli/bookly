@@ -14,7 +14,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DataContext>(x => x.UseInMemoryDatabase("Bookly"));
+// builder.Services.AddDbContext<DataContext>(x => x.UseInMemoryDatabase("Bookly"));
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var serverVersion = ServerVersion.AutoDetect(connectionString);
+builder.Services.AddDbContext<DataContext>(opt => opt.UseMySql(connectionString, serverVersion));
 
 builder.Services.AddScoped<ILoanRepository, LoanRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
