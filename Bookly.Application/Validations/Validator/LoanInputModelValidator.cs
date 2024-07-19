@@ -10,6 +10,7 @@ namespace Bookly.Application.Validations.Validators
     {
         private readonly IUserRepository _userRepository;
         private readonly IBookRepository _bookRepository;
+        private Book? _book;
         public LoanInputModelValidator(IUserRepository userRepository, IBookRepository bookRepository)
         {
             _userRepository = userRepository;
@@ -33,7 +34,27 @@ namespace Bookly.Application.Validations.Validators
                 {
                     var user = await _userRepository.FindByIdAsync(s.IdUser);
                     return user != null;
-                }).WithMessage( reg => $"Usuário de Id {reg.IdUser} não encontrado.");
+                }).WithMessage(reg => $"Usuário de Id {reg.IdUser} não encontrado.");
+            });
+
+            When(reg => reg.IdBook != 0, () =>
+            {
+                RuleFor(reg => reg).MustAsync(async (s, token) =>
+                {
+                    _book = await _bookRepository.FindByIdAsync(s.IdBook);
+                    return _book != null;
+                }).WithMessage(reg => $"Livro de Id {reg.IdBook} não encontrado.");
+
+            });
+
+            When(reg => _book != null, () =>
+            {
+                RuleFor(reg => reg).Must((s, token) =>
+               {
+                   if (_book == null) { return false; }
+
+                   return _book.Available;
+               }).WithMessage(reg => $"Livro de Id {reg.IdBook} não está disponível.");
             });
         }
 
