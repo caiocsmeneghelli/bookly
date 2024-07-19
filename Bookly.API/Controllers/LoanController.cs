@@ -49,7 +49,7 @@ namespace Bookly.API.Controllers
             return CreatedAtAction(nameof(GetById), new {id = idLoan}, model);
         }
 
-        [HttpPut("{idLoan}")]
+        [HttpPut("return/{idLoan}")]
         public async Task<IActionResult> ReturnLoan(int idLoan)
         {
             LoanViewModel? vwModel = await _loanService.ReturnLoan(idLoan);

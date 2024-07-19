@@ -55,9 +55,15 @@ namespace Bookly.Application.Services
             Loan? loan = await _loanRepository.GetLoanAsync(idLoan);
             if (loan is null)
             {
-                return null;
+                throw new LoanNotFoundException(idLoan);
             }
 
+            var loanValidator = new LoanValidator();
+            var resultValidator = loanValidator.Validate(loan);
+            if(resultValidator.IsValid == false)
+            {
+                throw new LoanBadRequestException(resultValidator.Errors);
+            } 
             loan.ReturnLoan();
             loan.Book.ReturnLoan();
 
