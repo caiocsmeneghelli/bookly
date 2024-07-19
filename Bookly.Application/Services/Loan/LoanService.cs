@@ -1,4 +1,6 @@
 using Bookly.Application.Model;
+using Bookly.Application.Validations.Exceptions;
+using Bookly.Application.Validations.Validators;
 using Bookly.Core.Entities;
 using Bookly.Core.Repositories;
 
@@ -19,18 +21,14 @@ namespace Bookly.Application.Services
 
         public async Task<int> Create(LoanInputModel inputModel)
         {
+            var validation = new LoanInputModelValidator(_userRepository, _bookRepository);
+            var validationResult = await validation.ValidateAsync(inputModel);
+            if(validationResult.IsValid == false){
+                throw new LoanBadRequestException(validationResult.Errors);
+            }
+
             User? user = await _userRepository.FindByIdAsync(inputModel.IdUser);
             Book? book = await _bookRepository.FindByIdAsync(inputModel.IdBook);
-
-            if (user is null)
-            {
-                throw new Exception("Usuário não encontrado.");
-            }
-
-            if (book is null)
-            {
-                throw new Exception("Livro não encontrado.");
-            }
 
             Loan loan = new Loan(book.Id, user.Id, inputModel.DueDate.Value);
             book.Loan();
