@@ -1,5 +1,6 @@
 using Bookly.Application.Model.InputModels;
 using FluentValidation;
+using System.Text.RegularExpressions;
 
 namespace Bookly.Application.Validations.Validators
 {
@@ -14,6 +15,21 @@ namespace Bookly.Application.Validations.Validators
             RuleFor(reg => reg.Email)
                 .NotEmpty()
                 .WithMessage("Campo email do usuário não pode ser vazio.");
+
+            When(reg => !string.IsNullOrWhiteSpace(reg.Email), () =>
+            {
+                RuleFor(reg => reg.Email)
+                    .Must(ValidateEmail)
+                    .WithMessage("E-mail informado não válido.");
+            });
         }
+
+        private bool ValidateEmail(string email)
+        {
+            string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+
+            return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
+        }
+
     }
 }
