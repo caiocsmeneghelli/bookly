@@ -14,12 +14,10 @@ namespace Bookly.API.Controllers
         {
             _bookService = bookService;
         }
-        // todo: Criar buscar todos disponiveis
 
         [HttpGet]
         public async Task<IActionResult> GetBooks(string? param = null)
         {
-            // FIX: busca por parametro
             var books = await _bookService.GetBooksAsync(param);
             return Ok(books);
         }
