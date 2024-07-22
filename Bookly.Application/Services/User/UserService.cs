@@ -38,7 +38,7 @@ namespace Bookly.Application.Services
                 throw new UserNotFoundException(idUser);
             }
 
-            return new UserViewModel(user.Name, user.Email);
+            return new UserViewModel(user);
         }
     }
 }

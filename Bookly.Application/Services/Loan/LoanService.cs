@@ -46,8 +46,7 @@ namespace Bookly.Application.Services
                 return null;
             }
 
-            return new LoanViewModel(loan.Book.Title, loan.User.Name,
-                loan.LoanDate, loan.DueDate, loan.ReturnDate);
+            return new LoanViewModel(loan);
         }
 
         public async Task<LoanViewModel?> ReturnLoan(int idLoan)
@@ -70,15 +69,13 @@ namespace Bookly.Application.Services
             await _bookRepository.UpdateAsync(loan.Book);
             await _loanRepository.UpdateAsync(loan);
 
-            return new LoanViewModel(loan.Book.Title, loan.User.Name,
-                loan.LoanDate, loan.DueDate, loan.ReturnDate);
+            return new LoanViewModel(loan);
         }
 
         public async Task<List<LoanViewModel>> GetAll(bool active)
         {
             var list = await _loanRepository.GetAllAsync(active);
-            return list.Select(reg => new LoanViewModel(reg.Book.Title, reg.User.Name,
-                reg.LoanDate, reg.DueDate, reg.ReturnDate)).ToList();
+            return list.Select(reg => new LoanViewModel(reg)).ToList();
         }
     }
 }
